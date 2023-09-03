@@ -1,0 +1,20 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'UserApi'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - user-api-db:/var/lib/mysql
+volumes:
+  user-api-db:
