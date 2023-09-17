@@ -8,16 +8,23 @@ namespace UserApi.Services;
 
 public class TokenService
 {
+  private readonly IConfiguration _configuration;
+  public TokenService(IConfiguration configuration)
+  {
+    _configuration = configuration;
+  }
+
   public string GenerateToken(User user)
   {
     Claim[] claims = new[]
     {
       new Claim(ClaimTypes.NameIdentifier, user.Id),
       new Claim(ClaimTypes.Name, user.UserName!),
+      new Claim(ClaimTypes.DateOfBirth, user.BirthDate.ToString()),
       new Claim(ClaimTypes.AuthenticationInstant, DateTime.UtcNow.ToString()),
     };
 
-    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("lkajsdoij20198ejiwq0de9ei2ojen2-0eioiqpwoej02"));
+    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]!));
 
     var token = new JwtSecurityToken(
       claims: claims,

@@ -1,4 +1,4 @@
-hot-reload:
+hot-reload: db-up
 	dotnet watch run --project ./UserApi.csproj --launch-profile hotreloadprofile
 
 start:
@@ -18,3 +18,6 @@ update-migration:
 
 remove-migration:
 	dotnet ef migrations remove
+
+secret:
+	 dotnet user-secrets set $(key) $(value)
